@@ -1,19 +1,31 @@
-import streamlit as st
-import whisper
+import os
 import tempfile
+import whisper
+import streamlit as st
 
-st.title("🎧 Whisper Transcriber")
-st.write("Upload an audio file and get the transcription using OpenAI's Whisper!")
+st.title("🎙 Whisper Audio Transcriber")
 
-uploaded_file = st.file_uploader("Upload audio file", type=["mp3", "wav", "m4a"])
+model = whisper.load_model("base")
+
+uploaded_file = st.file_uploader("Upload an audio file", type=["mp3", "wav", "m4a"])
 
 if uploaded_file is not None:
-    with tempfile.NamedTemporaryFile(delete=False) as tmp:
-        tmp.write(uploaded_file.read())
-        tmp_path = tmp.name
+    try:
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as tmp:
+            tmp.write(uploaded_file.read())
+            tmp_path = tmp.name
 
-    model = whisper.load_model("base")
-    result = model.transcribe(tmp_path)
-    
-    st.subheader("📝 Transcription:")
-    st.write(result["text"])
+        st.success("File uploaded successfully! Transcribing...")
+
+        result = model.transcribe(tmp_path)
+
+        st.subheader("Transcription:")
+        st.write(result["text"])
+
+        # Clean up temp file
+        os.remove(tmp_path)
+
+    except Exception as e:
+        st.error(f"An error occurred: {str(e)}")
+else:
+    st.info("Please upload an audio file to begin.")
