@@ -1,11 +1,10 @@
 # requirements.txt
 streamlit
-torch==2.7.0
-whisper==20240930
+openai-whisper
 transformers
 sentence-transformers
 faiss-cpu
 streamlit
 git+https://github.com/openai/whisper.git
-ffmpeg
-
+torch
+ffmpeg-python
