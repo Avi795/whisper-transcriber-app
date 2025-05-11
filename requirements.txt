@@ -5,8 +5,7 @@ torch
 transformers
 sentence-transformers
 faiss-cpu
-textwrap
 streamlit
 git+https://github.com/openai/whisper.git
 torch
-ffmpeg
+ffmpeg-python
