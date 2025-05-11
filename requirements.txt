@@ -6,5 +6,5 @@ sentence-transformers
 faiss-cpu
 streamlit
 git+https://github.com/openai/whisper.git
-torch
+torch==2.7.0
 ffmpeg-python
